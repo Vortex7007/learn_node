@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="quotes"></div>
+    <div id ="author"></div>
+    <button id ="newQ">New quotes</button>
+    <button id = "tweet">tweet</button>
+    <script>
+        const quotes = document.getElementById("quotes")
+        const author = document.getElementById("author")
+        const newQ = document.getElementById("newQ")
+        const tweet = document.getElementById("tweet")
+        let quote= ""
+        let realtimedata =""
+        const newTweet =() =>{
+            let newurl=`https://twitter.com/compose/tweet?text=${quote}`
+            window.open(newurl)
+        }
+        const randomnum = () =>{
+            let rnum = Math.floor(Math.random()*16)
+            console.log(rnum)
+            quote = realtimedata[rnum].text
+            quotes.innerText=`${quote}`
+            author.innerText=`By ${realtimedata[rnum].author}`
+            // return rnum;
+        }
+        const newQuotes = async()=>{
+            const api ="https://type.fit/api/quotes"
+            try {
+                let data = await fetch(api);
+                realtimedata = await data.json()
+
+                randomnum()
+                // console.log(realtimedata.length)
+                // console.log(realtimedata[randomnum()].text)
+            } catch (error) {
+                
+            }
+        }
+        newQ.addEventListener('click',randomnum)
+        tweet.addEventListener('click',newTweet)
+        newQuotes()
+    </script>
+</body>
+</html>

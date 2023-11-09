@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather app</title>
+</head>
+<body>
+    <div class="box">
+        <div class="wave -one"></div>
+        <div class="wave -two"></div>
+        <div class="wave -three"></div>
+
+        <div id="weathercon"><i class="fa-solid fa-sun" style="color: #effe20;"></i></div>
+        <div id="status">poty</div>
+        <div class="info">
+            <h2 class="location">
+                <i class="fa-solid fa-street-view" style="color: #375281;"></i>{%city%}, {%country%}
+            </h2>
+            <p id="date">MON | Oct 30 | 20:12</p>
+            <h1 class="temp">{%currentTemp%}&deg;C</h1>
+            <h3 class="tempMin_Max">Min {%minTemp%}&deg;C |Max {%maxTemp%}&deg;C</h3>
+        </div>
+    </div>
+    <script>
+        const curDate=document.getElementById("date");
+let weathercon=document.getElementById("weathercon");
+
+const getCurrentDay=()=>{
+    const weekday = ["SUN","MON","TUE","WED","THUR","FRI","SAT"];
+    const month= ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]
+
+    let d = new Date();
+    
+    let today =weekday[d.getDay()]
+    let dates = d.getDate();
+    let monthNum = month[d.getMonth()]
+    let hours = d.getHours()
+    let minutes=d.getMinutes()
+    let period = "AM"
+    if(hours>11){
+        period="PM"
+        if(hours>12)hours -=12;
+    }
+    if(minutes<10){
+        minutes="0"+minutes;
+    }
+    // console.log(`${monthNum}/${dates}`)
+
+    // console.log(`${hours}/${minutes} ${period}`)
+
+    return `${today} | ${monthNum} ${dates} | ${hours}:${minutes} ${period}`;
+}
+// getCurrentDay();
+curDate.innerHTML=getCurrentDay()
+    </script>
+    
+</body>
+</html> 

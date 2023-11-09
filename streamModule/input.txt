@@ -1,0 +1,5 @@
+hello there 
+my name is vortex7007
+i am going to learn streaming in node js
+it's goint to be fun
+checking pipe

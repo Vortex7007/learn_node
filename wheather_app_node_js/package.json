@@ -1,0 +1,14 @@
+{
+  "name": "wheather_app_node_js",
+  "version": "1.0.0",
+  "description": "creating simple weather website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vortex7007",
+  "license": "ISC",
+  "dependencies": {
+    "requests": "^0.3.0"
+  }
+}

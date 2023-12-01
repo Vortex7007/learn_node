@@ -26,17 +26,25 @@ const Playlist = new mongoose.model("Playlist", playlistSchema);//playlist will 
 const insertdoc = async() =>{
     try{
         const reactPlaylist = new Playlist({
-            name : "React JS2",
+            name : "React JS3",
             ctype : "Front end",
             videos : 82,
             author : "thapa technicals",
             active : true
         })
+        const jsPlaylist = new Playlist({
+            name : "JS",
+            ctype : "Front end",
+            videos : 150,
+            author : "thapa technicals",
+            active : true
+        })
 
-        const doc = await reactPlaylist.save();
+        const doc = await Playlist.insertMany([reactPlaylist, jsPlaylist]);// for inserting many docs at once ,uses insertMany function of the collection "playlist"
+        // const doc = await reactPlaylist.save();//for single insertion , reactplaylist is the name of the const
         console.log(doc)
     }catch(err){
         console.log(err)
     }
-}
-insertdoc()
+};
+insertdoc();

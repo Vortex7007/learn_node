@@ -47,4 +47,16 @@ const insertdoc = async() =>{
         console.log(err)
     }
 };
-insertdoc();
+// insertdoc();
+
+//reading documents from the database
+const getdoc = async ()=>{
+    try {
+        const result = await Playlist.find()
+        // const result = await Playlist.find({author : "thapa technicals"}).select({name:1}).limit(1)
+        console.log(result)
+        } catch (err) {
+        console.log(err)
+        }
+}
+getdoc();

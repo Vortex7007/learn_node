@@ -1,4 +1,5 @@
 const mongoose= require("mongoose");
+const validator = require("validator")
 
 const mongo_url= "mongodb://127.0.0.1:27017/anshukrmandal"
 mongoose.connect(mongo_url)
@@ -23,9 +24,32 @@ ctype : {
 },
     videos : {
         type : Number,
+        validate(value){
+            if (value <0){
+                throw new Error("Videos should be more than or equal to 0")
+            }
+        },
+        //OR
+        // the above one is more used
+        // validate :{
+        //     validator : function(value){
+        //         return value.length <0
+        //     },
+        //     message : "Videos should be more than or equal to 0"
+        // },
         min : 10
     },
     author : String,
+    email :{
+        type : String,
+        required : true,
+        unique : true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Entered email is not valid")
+            }
+        }
+    },
     active : Boolean,
     date: {
         type: Date,
@@ -39,10 +63,11 @@ const Playlist = new mongoose.model("Playlist", playlistSchema);//playlist will 
 const insertdoc = async() =>{
     try{
             const jsPlaylist = new Playlist({
-            name : "Python",
-            ctype : "Backend",
-            videos : 20,
+            name : "mongoose js",
+            ctype : "database",
+            videos : 120,
             author : "thapa technicals",
+            email : "bakfd@gamil.com",
             active : true
         })
 
@@ -55,7 +80,7 @@ const insertdoc = async() =>{
 };
 // insertdoc();
 
-//reading documents from the database
+//rekading documents from the database
 const getdoc = async ()=>{
     try {
         // const result = await Playlist.find()

@@ -36,9 +36,26 @@ app.get("/login", (req , res)=>{
     res.render("login")
 })
 
-app.get("/logout", auth , (req,res)=>{
+app.get("/logout", auth , async(req,res)=>{
     try {
-        console.log("logout successfully")
+        // console.log(req.anshu)
+        req.user.tokens = req.user.tokens.filter((currElement)=>{
+            return currElement.token != req.token
+        })
+        res.clearCookie("jwt");
+        await req.user.save();
+        res.render("login");
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+app.get("/logoutall", auth , async(req,res)=>{
+    try {
+        // console.log(req.anshu)
+        req.user.tokens = [];
+        res.clearCookie("jwt");
+        await req.user.save();
+        res.render("login");
     } catch (error) {
         res.status(500).send(error)
     }
@@ -91,7 +108,7 @@ app.post("/login",async (req , res)=>{
         if(passwordMatch){
             const token = await userLogin.generateAuthToken();
             res.cookie("jwt",token ,{
-                expires: new Date(Date.now() + 60000),
+                expires: new Date(Date.now() + 600000),
                 httpOnly: true,
             });
             res.render("index");

@@ -1,5 +1,6 @@
 const express = require("express");
 require("./db/conn")
+const linkRouter = require("./routers/link_routers.js");
 const path = require("path");
 const hbs = require("hbs");
 const app = express();
@@ -17,9 +18,8 @@ hbs.registerPartials(partialPath);
 
 
 //routing
-app.get("/",(req, res)=>{
-    res.render("index");
-})
+app.use(linkRouter);
+
 
 
 //server create

@@ -21,7 +21,6 @@ hbs.registerPartials(partialPath);
 app.use(linkRouter);
 
 
-
 //server create
 app.listen(port, ()=>{
     console.log(`server running at port no ${port}`);

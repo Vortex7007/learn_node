@@ -4,6 +4,7 @@ const linkRouter = require("./routers/link_routers.js");
 const path = require("path");
 const hbs = require("hbs");
 const app = express();
+const User = require("./models/userschema.js")
 const port = process.env.PORT || 3000;
 
 
@@ -12,9 +13,11 @@ const viewsPath = path.join(__dirname,"../templates/views")
 const partialPath = path.join(__dirname,"../templates/partials")
 
 //middlewares
+app.use(express.urlencoded({extended:false}))//New code 1st use
 app.set("view engine" , "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialPath);
+
 
 
 //routing

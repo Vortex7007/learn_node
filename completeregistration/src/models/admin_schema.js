@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const employeSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     name :{
         type : String,
         required : true
@@ -9,12 +9,18 @@ const employeSchema = new mongoose.Schema({
     email :{
         type : String,
         required : true,
-        unique : true
     },
     phone :{
         type : Number,
         required : true,
-        unique : true
+    },
+    newsecuritykey:{
+        type : String,
+        required: true,
+    },
+    adminsecuritykey:{
+        type : String,
+        required: true,
     },
     age : {
         type : Number,
@@ -23,10 +29,6 @@ const employeSchema = new mongoose.Schema({
     gender :{
         type : String,
         required : true
-    },
-    status :{
-        type : Boolean,
-        default : true
     },
     password :{
         type : String,
@@ -40,11 +42,10 @@ const employeSchema = new mongoose.Schema({
     }]
 })
 
-//creating tokens
-employeSchema.methods.generateAuthToken = async function(){
+adminSchema.methods.generateAuthToken = async function(){
     try {
         console.log(this._id)
-        const token = await jwt.sign({_id : this._id}, process.env.SECRET_KEY);
+        const token = await jwt.sign({_id : this._id}, process.env.SECRET_KEY_ADMIN);
         this.tokens = this.tokens.concat({token:token})
         
         console.log(token);
@@ -54,10 +55,7 @@ employeSchema.methods.generateAuthToken = async function(){
         console.log("the error part"+ error);
     }
 }
-
-
-//password hashing
-employeSchema.pre("save", async function(next){
+adminSchema.pre("save", async function(next){
     if(this.isModified("password")){
         // console.log(`the current password is ${this.password}`);
         this.password = await bcrypt.hash(this.password , 10);
@@ -66,6 +64,6 @@ employeSchema.pre("save", async function(next){
     next();
 })
 
-const Register = new mongoose.model("Register",employeSchema);
+const admin_register = new mongoose.model("Admin",adminSchema);
 
-module.exports = Register;
+module.exports = admin_register;
